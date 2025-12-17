@@ -1,15 +1,24 @@
+"""version control commit generation using an LLM."""
+
+__version__ = "0.1"
 import json
+import os
 import subprocess
 from pathlib import Path
 
 from google import genai
 
-with open("secrets/.gemini_api_key") as f:
-    gemini_api_key, *_ = f.readlines()
+# with open("secrets/.gemini_api_key") as f:
+#    gemini_api_key, *_ = f.readlines()
 
-client = genai.Client(api_key=gemini_api_key)
+try:
+    os.environ["GEMINI_API_KEY"]
+except KeyError as e:
+    raise KeyError("You have not set the GEMINI_API_KEY environment variable") from e
 
-history_list = []
+client = genai.Client()
+
+history_list: list[genai.types.Content] = []
 
 SYSTEM_INSTRUCTION = """You generate concise commit messages for
     commiting to the mercurial repository. Keep the commit message
@@ -58,7 +67,7 @@ def hgdiff():
     """Return the result of the hg diff command."""
     try:
         result = subprocess.run(
-            ["hg", "diff"], capture_output=True, text=True, check=True
+            ["hg", "diff", "--git"], capture_output=True, text=True, check=True
         )
         return result.stdout
     except FileNotFoundError:

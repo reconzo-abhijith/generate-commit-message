@@ -1,0 +1,25 @@
+[project]
+name = "commitbot"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Abhijith Nayak", email = "abhijith@reconzo.com" }]
+dependencies = [
+  "google-genai>=1.52.0",
+]
+dynamic = ["description", "version"]
+
+[project.urls]
+Home = "https://github.com/reconzo-abhijith/generate-commit-message"
+
+[project.scripts]
+commitbot = "commitbot:main"
+
+[project.optional-dependencies]
+build = ["flit"]
+dev = ["ipython"]
+test = ["pytest", "mypy", "pytest-timer[termcolor]", "pytest-cov"]
+
+[build-system]
+requires = ["flit_core >=3.11,<4"]
+build-backend = "flit_core.buildapi"
