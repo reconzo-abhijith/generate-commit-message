@@ -3,3 +3,7 @@ syntax: glob
 secrets/*
 __pycache__/*
 .mypy_cache/*
+.venv/*
+.ruff_cache/*
+uv.lock
+requirements.in
