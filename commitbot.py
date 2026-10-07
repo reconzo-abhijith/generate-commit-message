@@ -146,7 +146,7 @@ def main2():
 
 
 def main():
-    print(process(""))
+    print(process("Generate Output"))
 
 
 if __name__ == "__main__":
